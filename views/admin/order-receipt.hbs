@@ -1,0 +1,158 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Font Awesome -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+  rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.2.0/mdb.min.css"
+  rel="stylesheet"
+/>
+</head>
+<body>
+
+   <section class="h-100 gradient-custom pb-5">
+  <div class="container  ">
+    <div class=" pb-5">
+
+    
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-10 col-xl-8">
+        <div class="card" style="border-radius: 10px;">
+          {{!-- <div class="card-header px-4 py-5 pt-5">
+            <h5 class="text-muted mb-0">Thanks for your Order, <span style="color:#ffa020;">{{orderDetails.deliveryDetails.name}}</span><span style="color: #a8729a;"></span>!</h5>
+          </div> --}}
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <p class="lead fw-normal mb-0" style="color: #ffa020;">Receipt</p>
+              <p class="small text-muted mb-0">Receipt Voucher : {{order._id}}</p>
+            </div>
+
+            {{#each orderdetails.products}}
+            <div class="card shadow-0 border mb-4">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-2">
+                    <img src="/uploads/{{pro_id.Image.[0].image1}}"
+                      class="img-fluid" alt="Phone">
+                  </div>
+                  <div class="col-md-3 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0">{{pro_id.Name}}</p>
+                  </div>
+                  <div class="col-md-1 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0 small">x {{this.quantity}}</p>
+                  </div>
+                  
+                  <div class="col-md-1text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0 small">₹{{this.subtotal}}</p>
+                  </div>
+                  <div class="col-md-3 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0 small">status : <span style="color:orangered"> {{../orderdetails.status}}</span></p>
+                  </div>
+                  
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <form method="post" action="/admin/changeOrderStatus">
+                                            
+                                            <select class="form-control" id="exampleFormControlSelect1" name="orderStatus" >
+                                                <option>Status</option>
+                                                <option>Ordered</option>
+                                                <option>Shipped</option>
+                                                <option>Delivered</option>
+                                                <option>Cancelled</option>
+
+                                            </select>
+                                            <input type="text" name="orderId" value="{{../orderdetails._id}}" hidden>
+                                            <input type="text" name="proId" value="{{this._id}}" hidden>
+                                            <a><button type="submit" class="btn" style="background-color:rgb(231, 219, 219)" href="#">Change</button></a>
+
+                                        </form>
+                  </div>
+                
+                  
+                </div>
+                <hr class="mb-4" style="background-color: #e0e0e0; opacity: 0;">
+                <div class="row d-flex align-items-center">
+                  {{!-- <div class="col-md-2">
+                    <p class="text-muted mb-0 small">Track Order</p>
+                  </div> --}}
+                  {{!-- <div class="col-md-10">
+                    <div class="progress" style="height: 6px; border-radius: 16px;">
+                      <div class="progress-bar" role="progressbar"
+                        style="width: 65%; border-radius: 16px; background-color: #ffcd87;" aria-valuenow="65"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="d-flex justify-content-around mb-1">
+                      <p class="text-muted mt-1 mb-0 small ms-xl-5">Out for delivary</p>
+                      <p class="text-muted mt-1 mb-0 small ms-xl-5">Delivered</p>
+                    </div>
+                  </div> --}}
+                </div>
+              </div>
+            </div>
+
+            {{/each}}
+            
+
+            <div class="d-flex justify-content-between pt-2">
+              <p class="fw-bold mb-0"><span style="color:#1b1a19;">Order Details</span></p>
+              <p class="text-muted mb-0"><span class="fw-bold me-4">Subtotal : </span> ₹ {{orderdetails.Total}}</p>
+            </div>
+
+            {{!-- <div class="d-flex justify-content-between pt-2">
+              <p class="text-muted mb-0">Invoice Number : 788152</p>
+              <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> $19.00</p>
+            </div> --}}
+
+            <div class="d-flex justify-content-between">
+              <p class="text-muted mb-0"><span class="fw-bold me-4">Invoice Date :</span> {{orderdetails.ordered_on}}</p>
+              {{!-- <p class="text-muted mb-0"><span class="fw-bold me-4">GST 18%</span> 123</p> --}}
+            </div>
+
+            <div class="d-flex justify-content-between ">
+              {{!-- <p class="text-muted mb-0">Recepits Voucher : 18KU-62IIK</p> --}}
+              <p class="text-muted mb-0"><span class="fw-bold me-4">Shipping Charge : </span> ₹ {{order.ShippingCharge}}</p>
+            </div>
+            <div class="d-flex justify-content-between ">
+              {{!-- <p class="text-muted mb-0">Recepits Voucher : 18KU-62IIK</p> --}}
+              <p class="text-muted mb-0"><span class="fw-bold me-4">Coupon Discount : </span> ₹ {{order.couponDiscount}}</p>
+            </div>
+            <div class="d-flex justify-content-between ">
+              {{!-- <p class="text-muted mb-0">Recepits Voucher : 18KU-62IIK</p> --}}
+              <p class="text-muted mb-0"><span class="fw-bold me-4">Grand Total : </span> ₹ {{orderdetails.grandTotal}}</p>
+            </div>
+
+          </div>
+          <div class="card-footer border-0 px-4 py-5 "
+            style="background-color: #131211; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+            <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">Total
+              paid: <span class="h2 mb-0 ms-2">₹{{orderdetails.grandTotal}}</span></h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- MDB -->
+<script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.2.0/mdb.min.js"
+></script> 
+</body>
+</html>

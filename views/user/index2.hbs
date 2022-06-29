@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <!-- Basic -->
+      <meta charset="utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <!-- Mobile Metas -->
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+      <!-- Site Metas -->
+      <meta name="keywords" content="" />
+      <meta name="description" content="" />
+      <meta name="author" content="" />
+      <link rel="shortcut icon" href="images2/favicon.png" type="">
+      <title>Famms - Fashion HTML Template</title>
+      <!-- bootstrap core css -->
+      <link rel="stylesheet" type="text/css" href="css1/bootstrap.css" />
+      <!-- font awesome style -->
+      <link href="css1/font-awesome.min.css" rel="stylesheet" />
+      <!-- Custom styles for this template -->
+      <link href="css1/style.css" rel="stylesheet" />
+      <!-- responsive style -->
+      <link href="css1/responsive.css" rel="stylesheet" />
+      <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script><!--sweetalert-->
+   </head>
+   <body>
+      <div class="hero_area">
+         <!-- header section strats -->
+         
+         <!-- end header section -->
+         <!-- slider section -->
+          <!--? slider Area Start -->
+        <div class="slider-area ">
+            <div class="slider-active">
+                <!-- Single Slider -->
+                <div class="single-slider slider-height d-flex align-items-center slide-bg">
+                    <div class="container">
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                                <div class="hero__caption">
+                                    <h1 data-animation="fadeInLeft" data-delay=".4s" data-duration="2000ms">Select Your New Perfect Style</h1>
+                                    <p data-animation="fadeInLeft" data-delay=".7s" data-duration="2000ms">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat is aute irure.</p>
+                                    <!-- Hero-btn -->
+                                    <div  data-animation="fadeInLeft" data-delay=".8s" data-duration="2000ms">
+                                        <a href="/shop" class="btn btn-danger">Shop Now</a>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            {{#each products}}
+                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 d-none d-sm-block">
+                                <div class="hero__img" data-animation="bounceIn" data-delay=".4s">
+                                  <img src="/uploads/{{this.Image.[0].image1}}" style="width:400px">
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+                {{!-- <!-- Single Slider -->
+                <div class="single-slider slider-height d-flex align-items-center slide-bg">
+                    <div class="container">
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                                <div class="hero__caption">
+                                    <h1 data-animation="fadeInLeft" data-delay=".4s" data-duration="2000ms">Select Your New Perfect Style</h1>
+                                    <p data-animation="fadeInLeft" data-delay=".7s" data-duration="2000ms">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat is aute irure.</p>
+                                    <!-- Hero-btn -->
+                                    <div class="hero__btn" data-animation="fadeInLeft" data-delay=".8s" data-duration="2000ms">
+                                        <a href="/shop" class="btn hero-btn">Shop Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 d-none d-sm-block">
+                                <div class="hero__img" data-animation="bounceIn" data-delay=".4s">
+                                    <img src="uploads/image2-1656412897812-.webp" alt="" class=" heartbeat">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> --}}
+            </div>
+        </div>
+        <!-- slider Area End-->
+         <!-- end slider section -->
+      </div>
+      <!-- why section -->
+      
+      <!-- end why section -->
+      
+      <!-- arrival section -->
+     
+      <!-- end arrival section -->
+      
+      <!-- product section -->
+      <section class="product_section layout_padding">
+         <div class="container">
+            <div class="heading_container heading_center">
+               <h2>
+                  New Arrivals
+               </h2>
+            </div>
+            <div class="row">
+                {{#each prods}}
+               <div class="col-sm-6 col-md-4 col-lg-4">
+                  <div class="box">
+                     
+                     <div class="option_container">
+                        <div class="options">
+                           <a href="/single-product/{{this._id}}" class="option1">
+                           view product
+                           </a>
+                           
+                           <a onclick="addTocart('{{this._id}}')" class="option2" type="submit">Add to cart</a>
+                           
+                          
+                          {{!-- <a   onclick="addTowishlist('{{this._id}}')"  class="option2" type="submit"><span style="color:aliceblue">Add to wishlist</span> </a> --}}
+                          
+                       
+                        </div>
+                     </div>
+                     <div class="img-box">
+                        <img src="/uploads/{{this.Image.[0].image1}}" style="width:200px">
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                         	<span class="block2-price m-text6 p-r-5 font-weight-lighter" style="color: #d3d3d3;">
+									 ₹ <s>{{this.mrp}}</s>
+								</span>
+                        </h5>
+                        <h6>
+                       {{this.Name}}
+                        </h6>
+                        <h5>
+                        ₹ {{this.Price}}
+                        </h5>
+                     </div>
+                  </div>
+               </div>
+               {{/each}}
+               </div>
+               </div>
+               {{!-- <div class="col-sm-6 col-md-4 col-lg-4">
+                  <div class="box">
+                     <div class="option_container">
+                        <div class="options">
+                           <a href="" class="option1">
+                           Add To Cart
+                           </a>
+                           <a href="" class="option2">
+                           Buy Now
+                           </a>
+                        </div>
+                     </div>
+                     <div class="img-box">
+                        <img src="images2/p2.png" alt="">
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           Men's Shirt
+                        </h5>
+                        <h6>
+                           $80
+                        </h6>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-4 col-lg-4">
+                  <div class="box">
+                     <div class="option_container">
+                        <div class="options">
+                           <a href="" class="option1">
+                           Add To Cart
+                           </a>
+                           <a href="" class="option2">
+                           Buy Now
+                           </a>
+                        </div>
+                     </div>
+                     <div class="img-box">
+                        <img src="images2/p3.png" alt="">
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           Women's Dress
+                        </h5>
+                        <h6>
+                           $68
+                        </h6>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-4 col-lg-4">
+                  <div class="box">
+                     <div class="option_container">
+                        <div class="options">
+                           <a href="" class="option1">
+                           Add To Cart
+                           </a>
+                           <a href="" class="option2">
+                           Buy Now
+                           </a>
+                        </div>
+                     </div>
+                     <div class="img-box">
+                        <img src="images2/p4.png" alt="">
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           Women's Dress
+                        </h5>
+                        <h6>
+                           $70
+                        </h6>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-4 col-lg-4">
+                  <div class="box">
+                     <div class="option_container">
+                        <div class="options">
+                           <a href="" class="option1">
+                           Add To Cart
+                           </a>
+                           <a href="" class="option2">
+                           Buy Now
+                           </a>
+                        </div>
+                     </div>
+                     <div class="img-box">
+                        <img src="images2/p5.png" alt="">
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           Women's Dress
+                        </h5>
+                        <h6>
+                           $75
+                        </h6>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-4 col-lg-4">
+                  <div class="box">
+                     <div class="option_container">
+                        <div class="options">
+                           <a href="" class="option1">
+                           Add To Cart
+                           </a>
+                           <a href="" class="option2">
+                           Buy Now
+                           </a>
+                        </div>
+                     </div>
+                     <div class="img-box">
+                        <img src="images2/p6.png" alt="">
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           Women's Dress
+                        </h5>
+                        <h6>
+                           $58
+                        </h6>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-4 col-lg-4">
+                  <div class="box">
+                     <div class="option_container">
+                        <div class="options">
+                           <a href="" class="option1">
+                           Add To Cart
+                           </a>
+                           <a href="" class="option2">
+                           Buy Now
+                           </a>
+                        </div>
+                     </div>
+                     <div class="img-box">
+                        <img src="images2/p7.png" alt="">
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           Women's Dress
+                        </h5>
+                        <h6>
+                           $80
+                        </h6>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-4 col-lg-4">
+                  <div class="box">
+                     <div class="option_container">
+                        <div class="options">
+                           <a href="" class="option1">
+                           Add To Cart
+                           </a>
+                           <a href="" class="option2">
+                           Buy Now
+                           </a>
+                        </div>
+                     </div>
+                     <div class="img-box">
+                        <img src="images2/p8.png" alt="">
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           Men's Shirt
+                        </h5>
+                        <h6>
+                           $65
+                        </h6>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-4 col-lg-4">
+                  <div class="box">
+                     <div class="option_container">
+                        <div class="options">
+                           <a href="" class="option1">
+                           Add To Cart
+                           </a>
+                           <a href="" class="option2">
+                           Buy Now
+                           </a>
+                        </div>
+                     </div>
+                     <div class="img-box">
+                        <img src="images2/p9.png" alt="">
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           Men's Shirt
+                        </h5>
+                        <h6>
+                           $65
+                        </h6>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-4 col-lg-4">
+                  <div class="box">
+                     <div class="option_container">
+                        <div class="options">
+                           <a href="" class="option1">
+                           Add To Cart
+                           </a>
+                           <a href="" class="option2">
+                           Buy Now
+                           </a>
+                        </div>
+                     </div>
+                     <div class="img-box">
+                        <img src="images2/p10.png" alt="">
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           Men's Shirt
+                        </h5>
+                        <h6>
+                           $65
+                        </h6>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-4 col-lg-4">
+                  <div class="box">
+                     <div class="option_container">
+                        <div class="options">
+                           <a href="" class="option1">
+                           Add To Cart
+                           </a>
+                           <a href="" class="option2">
+                           Buy Now
+                           </a>
+                        </div>
+                     </div>
+                     <div class="img-box">
+                        <img src="images2/p11.png" alt="">
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           Men's Shirt
+                        </h5>
+                        <h6>
+                           $65
+                        </h6>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-4 col-lg-4">
+                  <div class="box">
+                     <div class="option_container">
+                        <div class="options">
+                           <a href="" class="option1">
+                           Add To Cart
+                           </a>
+                           <a href="" class="option2">
+                           Buy Now
+                           </a>
+                        </div>
+                     </div>
+                     <div class="img-box">
+                        <img src="images2/p12.png" alt="">
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           Women's Dress
+                        </h5>
+                        <h6>
+                           $65
+                        </h6>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="btn-box">
+               <a href="">
+               View All products
+               </a>
+            </div>
+         </div> --}}
+      </section>
+      <!-- end product section -->
+
+      <!-- subscribe section -->
+   
+      <!-- end client section -->
+      <!-- footer start -->
+
+      <section class="product_section layout_padding">
+         <div class="container">
+            <div class="heading_container heading_center">
+               <h2>
+                  Favourite Brands
+               </h2>
+            </div>
+            <div class="row">
+                {{#each brands}}
+               <div class="col-sm-6 col-md-4 col-lg-3">
+                  <div class="box">
+                     
+                     <div class="option_container">
+                        <div class="options">
+                           <a href="/get-products-brandwise/{{this._id}}" class="option1">
+                           view products
+                           </a>
+                           
+                           {{!-- <a onclick="addTocart('{{this._id}}')" class="option2" type="submit">Add to cart</a> --}}
+                           
+                          
+                         
+                          
+                       
+                        </div>
+                     </div>
+                      <div class="img-box">
+                        <img src="/uploads/{{this.Image.[0].image1}}" style="width:200px">
+                     </div>
+                     <div class="detail-box">
+                        {{!-- <h5>
+                         	<span class="block2-price m-text6 p-r-5 font-weight-lighter" style="color: #d3d3d3;">
+									 ₹ <s>{{this.mrp}}</s>
+								</span>
+                        </h5> --}}
+                        <h6>
+                       {{ this.BrandName}}
+                        </h6>
+                        {{!-- <h6>
+                       {{ this._id}}
+                        </h6> --}}
+                        {{!-- <h5>
+                        ₹ {{this.Price}}
+                        </h5> --}}
+                     </div>
+                  </div>
+               </div>
+               {{/each}}
+               </div>
+               </div>
+                 </section>
+      <footer>
+         <div class="container">
+            <div class="row">
+               <div class="col-md-4">
+                   <div class="full">
+                      <div class="logo_footer">
+                        <a href="#"><img width="210" src="images2/logo.png" alt="#" /></a>
+                      </div>
+                      <div class="information_f">
+                        <p><strong>ADDRESS:</strong> 28 White tower, Street Name New York City, USA</p>
+                        <p><strong>TELEPHONE:</strong> +91 987 654 3210</p>
+                        <p><strong>EMAIL:</strong> yourmain@gmail.com</p>
+                      </div>
+                   </div>
+               </div>
+               <div class="col-md-8">
+                  <div class="row">
+                  <div class="col-md-7">
+                     <div class="row">
+                        <div class="col-md-6">
+                     <div class="widget_menu">
+                        <h3>Menu</h3>
+                        <ul>
+                           <li><a href="#">Home</a></li>
+                           <li><a href="#">About</a></li>
+                           <li><a href="#">Services</a></li>
+                           <li><a href="#">Testimonial</a></li>
+                           <li><a href="#">Blog</a></li>
+                           <li><a href="#">Contact</a></li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="widget_menu">
+                        <h3>Account</h3>
+                        <ul>
+                           <li><a href="#">Account</a></li>
+                           <li><a href="#">Checkout</a></li>
+                           <li><a href="#">Login</a></li>
+                           <li><a href="#">Register</a></li>
+                           <li><a href="#">Shopping</a></li>
+                           <li><a href="#">Widget</a></li>
+                        </ul>
+                     </div>
+                  </div>
+                     </div>
+                  </div>     
+                  <div class="col-md-5">
+                     <div class="widget_menu">
+                        <h3>Newsletter</h3>
+                        <div class="information_f">
+                          <p>Subscribe by our newsletter and get update protidin.</p>
+                        </div>
+                        <div class="form_sub">
+                           <form>
+                              <fieldset>
+                                 <div class="field">
+                                    <input type="email" placeholder="Enter Your Mail" name="email" />
+                                    <input type="submit" value="Subscribe" />
+                                 </div>
+                              </fieldset>
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </footer>
+      <!-- footer end -->
+      <div class="cpy_">
+         <p class="mx-auto">© 2021 All Rights Reserved By <a href="https://html.design/">Free Html Templates</a><br>
+         
+            Distributed By <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
+         
+         </p>
+      </div>
+     
+      <!-- jQery -->
+      <script src="js2/jquery-3.4.1.min.js"></script>
+      {{!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> --}}
+     
+      <!-- popper js -->
+      <script src="js2/popper.min.js"></script>
+      <!-- bootstrap js -->
+      <script src="js2/bootstrap.js"></script>
+      <!-- custom js -->
+      <script src="js2/custom.js"></script>
+      <script src="js2/ajax.js"></script>
+   </body>
+</html>
