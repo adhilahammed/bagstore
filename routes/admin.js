@@ -36,25 +36,37 @@ router.get('/', function(req, res, next) {
 
 
   router.post('/Adminlogin', function(req, res, next) {
-    console.log('hello');
-    adminHelper.adminLogin(req.body).then((response) => {
-     console.log('hello');
-        if(response.status){
-            req.session.admin=response.admin
-            req.session.adminloggedIn=true
-            res.redirect('/admin/adminhome')
-        }
-        else{
-            req.session.adminloggedInErr=true
-            res.redirect('/admin')
-        }
-
+    // console.log('hello');
+    // adminHelper.adminLogin(req.body).then((response) => {
+    //  console.log('hello');
+    //     if(response.status){
+    //         req.session.admin=response.admin
+    //         req.session.adminloggedIn=true
+    //         res.redirect('/admin/adminhome')
+    //     }
+    //     else{
+    //         req.session.adminloggedInErr=true
+    //         res.redirect('/admin')
+    //     }
+ 
+    const pass=1234
+    const em="adhil@gmail.com"
+    console.log(req.body);
+    if (em == req.body.email && pass == req.body.password) {
+      req.session.adminloggedIn = true
+      req.session.admin = req.body
+  
+      res.redirect('/admin/adminhome')
+    } else {
+      req.session.adminloggedInErr=true
+      res.redirect('/admin')
+    }
 
     })
     
    
 
-});
+
 
 router.get('/Users',verifyLogin, function(req, res, next) {
   adminHelper.getAllUsers().then((users)=>{
