@@ -40,7 +40,7 @@ router.get('/', function(req, res, next) {
     adminHelper.adminLogin(req.body).then((response) => {
      console.log('hello');
         if(response.status){
-            req.session.admin1=response.admin
+            req.session.admin=response.admin
             req.session.adminloggedIn=true
             res.redirect('/admin/adminhome')
         }
