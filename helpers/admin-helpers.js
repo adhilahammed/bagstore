@@ -12,35 +12,35 @@ const couponModel=require('../models/coupon')
 
 
 module.exports={
-//    adminLogin:(adminDat)=>{         
-//      return new Promise(async(resolve,reject)=>{
-//        let response={}
+   adminLogin:(adminDat)=>{         
+     return new Promise(async(resolve,reject)=>{
+       let response={}
 
-//        let admin=await adminData.findOne({email:adminDat.email})
-//      console.log(admin);
-//      if(admin){
-//        console.log('admin');
-//          bcrypt.compare(adminDat.password,admin.password).then((result)=>{
-//             if(result){
-//              console.log('login success');
-//                 response.admin=admin
-//                 response.status=true
-//                 resolve(response)
-//             }
-//             else{
-//                 console.log('login failed');
-//                 response.status=false
-//                 resolve(response)
-//             }
-//   })
-//  }
-//  else{
-//     console.log('login failed 2');
-//     resolve({status:false})
-//  }
-//      })
+       let admin=await adminData.findOne({email:adminDat.email})
+     console.log(admin);
+     if(admin){
+       console.log('admin');
+         bcrypt.compare(adminDat.password,admin.password).then((result)=>{
+            if(result){
+             console.log('login success');
+                response.admin=admin
+                response.status=true
+                resolve(response)
+            }
+            else{
+                console.log('login failed');
+                response.status=false
+                resolve(response)
+            }
+  })
+ }
+ else{
+    console.log('login failed 2');
+    resolve({status:false})
+ }
+     })
     
-//     },
+    },
     getAllUsers:()=>{
       return new Promise(async(resolve,reject)=>{
         let users=await userData.find().lean()
