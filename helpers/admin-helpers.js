@@ -133,7 +133,7 @@ module.exports={
     },
     deleteCategory:(id)=>{
       return new Promise(async(resolve,reject)=>{
-        let cattags=await brands.findByIdAndDelete({_id:id})
+        let cattags=await category.findByIdAndDelete({_id:id})
         resolve(cattags)
       })
     },
