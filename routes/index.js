@@ -285,14 +285,25 @@ router.get("/add-to-wishlist/:id",verifyLogin, async (req, res) => {
 });
 
 router.get('/show-wishlist', (req,res)=>{      
-userHelper.showWishlist(req.session.user).then(async(response)=>{     
-let user      = req.session.user      
+  let user      = req.session.user  
+  if(!user){
+          
+    res.render('user/wishlist-empty') 
+  }   
+else{userHelper.showWishlist(req.session.user).then(async(response)=>{                  
+    
   const wishlist=response
   console.log(wishlist);
-  const wishlistCount=await userHelper.getWishlistCount(req.session.user._id)
+  const wishlistCount=await userHelper.getWishlistCount(req.session.user._id)   
   const cartCount = await userHelper.getCartCount(req.session.user._id)
-  res.render('user/wishlist',{user,wishlist,wishlistCount,cartCount})            
+ 
+  if(wishlistCount==0){
+    res.render('user/wishlist-empty',{user,wishlist,wishlistCount,cartCount})       
+  }  else{
+    res.render('user/wishlist',{user,wishlist,wishlistCount,cartCount})    
+  }         
 })
+}
  
 })
 
