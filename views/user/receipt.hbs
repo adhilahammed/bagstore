@@ -29,7 +29,7 @@
 </head>
 <body>
 
-   <section class=" gradient-custom pt-5 pb-5">
+   <section class=" gradient-custom pt-5 pb-5">  
   <div class="container  pt-5">
     <div class="pt-5 pb-5">
 
@@ -83,7 +83,7 @@
                   </div> --}}
                  
                      <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                  {{#if this.cancelled}}
+                  {{#if this.orderCancelled}}     
 
                 {{else}}
                     <button class="btn btn-danger "  onclick="cancelOrder('{{../order._id}}','{{pro_id._id}}','{{this.subtotal}}','{{../order.grandTotal}}','{{../order.couponPercent}}','{{../order.reFund}}','{{this.quantity}}')">Cancel Order</button>
@@ -124,6 +124,10 @@
             <div class="d-flex justify-content-between ">
               {{!-- <p class="text-muted mb-0">Recepits Voucher : 18KU-62IIK</p> --}}
               <p class="text-muted mb-0"><span class="fw-bold me-4">Coupon Discount : </span> {{order.coupondiscountedPrice}}</p>
+            </div>
+             <div class="d-flex justify-content-between ">
+              {{!-- <p class="text-muted mb-0">Recepits Voucher : 18KU-62IIK</p> --}}
+              <p class="text-muted mb-0"><span class="fw-bold me-4">Refund : </span> {{order.reFund}}</p>
             </div>
             <div class="d-flex justify-content-between ">
               {{!-- <p class="text-muted mb-0">Recepits Voucher : 18KU-62IIK</p> --}}

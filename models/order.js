@@ -11,7 +11,9 @@ const orderSchema= new Schema({
     price: { type: Number },
     quantity: { type: Number, default: 1 },
     subtotal: { type: Number, default: 0 },
-    status:{type:String,default:'Order placed'}      
+    status:{type:String,default:'Order placed'} , 
+    orderCancelled:{type:Boolean,default:false},
+    Name:{type:String},       
    }],
     userId:String,
     paymentmethod:String,
@@ -26,6 +28,7 @@ const orderSchema= new Schema({
     coupondiscountedPrice:{type:Number,default:0},          
     couponPercent:{type:Number,default:0},
     couponName:{type:String},
+    reFund:{type:Number,default:0},
    address:[{
  
     fullname:String,                       

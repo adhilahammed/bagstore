@@ -226,7 +226,7 @@ module.exports = {
                            cartmodel
                            
                            .updateOne(
-                               {'products.pro_id':proId,user:userId},
+                               {'products.pro_id':proId,'products.Name':product.Name,user:userId},
                                {
                                    $inc:{'products.$.quantity':1},
                                    
@@ -246,8 +246,8 @@ module.exports = {
                                    $push:{
                                        products:{
                                         pro_id:proId,
-                                        price:product.Price
-                                       
+                                        price:product.Price,
+                                        Name:product.Name
                                        
                                        }}
                                }
@@ -267,7 +267,8 @@ module.exports = {
                             
                             products:{
                                 pro_id:proId,
-                                        price:product.Price
+                                        price:product.Price,
+                                        Name:product.Name
                             }
                         })
                        await cartObj
@@ -584,47 +585,66 @@ module.exports = {
                 })
             },
             placeOrder:(order,items,gratotal,DeliveryCharges,net,user)=>{
-              return new Promise(async(resolve,reject)=>{
-                // console.log(net);
-                const status=order.paymentMethod==='cod'?'placed':'pending'    
-                // console.log(order.paymentMethod);
-                // console.log(items.products);
-                const newobj=await orderData({
-
-                   
-                  address:{ fullname:order.fname,     
-                    phone:order.number,
-                    email:order.email,
-                    house:order.house,
-                    locality:order.localplace,
-                    town:order.town,
-                    district:order.district,    
-                    state:order.state,
-                    pin:order.pincode    
-                  },
-                  grandTotal:order.mainTotal, 
-                  ShippingCharge:DeliveryCharges,     
-                  coupondiscountedPrice:order.discountedPrice,   
-                  couponPercent:order.discoAmountpercentage,
-                  couponName:order.couponName,
-                  total:order.total,
-                  userId:user._id,
-                   products:items.products,
-                   paymentmethod:order.paymentMethod,     
-                  
-                   status:status,
-                   ordered_on:new Date(),        
-                })
-               await newobj.save(async(err,res)=>{
-               
-                await cartmodel.remove({user:order.userId})            
-                resolve(newobj)
-                // console.log(newobj);
-               })   
-              
-              })
-            },
-
+                return new Promise(async(resolve,reject)=>{
+                  // console.log(net);
+                  let id=mongoose.Types.ObjectId(user._id);
+                  const status=order.paymentMethod==='cod'?'placed':'pending'    
+                  // console.log(order.paymentMethod);
+                  // console.log(items.products);
+                  const newobj=await orderData({
+  
+                     
+                    address:{ fullname:order.fname,     
+                      phone:order.number,
+                      email:order.email,
+                      house:order.house,
+                      locality:order.localplace,
+                      town:order.town,
+                      district:order.district,    
+                      state:order.state,
+                      pin:order.pincode    
+                    },
+                    grandTotal:order.mainTotal, 
+                    ShippingCharge:DeliveryCharges,     
+                    coupondiscountedPrice:order.discountedPrice,   
+                    couponPercent:order.discoAmountpercentage,
+                    couponName:order.couponName,
+                    total:order.total,
+                    userId:user._id,
+                     products:items.products,
+                     paymentmethod:order.paymentMethod,     
+                    
+                     status:status,
+                     ordered_on:new Date(),        
+                  })
+                  await newobj.save(async(err,res)=>{
+                      const data=await cartmodel.aggregate([
+                        {
+                          $match:{user:id}
+                        },
+                        {  
+                          $unwind:'$products',
+                        },
+                        { 
+                          $project:{
+                            quantity:'$products.quantity',  
+                            id:'$products.pro_id'
+                          }, 
+                        },
+                      ]);
+                      console.log("======================================");
+                      console.log(data+'');
+                      data.forEach(async(amt)=>{
+                        await productData.findOneAndUpdate({
+                          _id:amt.id
+                        },{$inc:{stock:-(amt.quantity)}})
+                      })
+                     await cartmodel.remove({user:order.userId})   
+                
+                      resolve(newobj);     
+                    })
+                  })
+                  }, 
             validateCoupon: (data, userId) => {
                 console.log(data);
               return new Promise(async (resolve, reject) => {
@@ -720,25 +740,88 @@ module.exports = {
 
             cancelOrder:(data)=>{
                 console.log(data);
-                return new Promise(async(resolve,reject)=>{     
-                    const status='cancelled'
-                   const cancelOrder=await orderData.findOneAndUpdate({_id:data.orderId,'products.pro_id':data.proId},
-                    {
-                        $set:{'products.$.status':status}
-                    },
-                    )
-                   
-                    // await productData.findOne({_id:data.proId},     
-                    //     {
-                    //         $inc:{
-                    //         stock:1
-                    //         }}
-                    //     )
-                        resolve()
-                       console.log('ddddddddddddddddddddddd');
+    order=mongoose.Types.ObjectId(data.orderId);
+    let quantity = parseInt(data.quantity);
+    console.log(parseInt(data.couponPercent));
 
-                })
-            },
+    discountPrice =
+    parseInt(data.subtotal) -((parseInt(data.couponPercent) * parseInt(data.subtotal)) /100).toFixed(0);
+
+    // console.log("==============================");
+    console.log(discountPrice);
+    const status='Cancelled'
+    return new Promise (async(resolve,reject)=>{
+      const cancelorder=await orderData.updateMany({_id:data.orderId,'products.pro_id':data.proId},
+      {
+       $set:{
+        "products.$.status":status, 
+        "products.$.orderCancelled":true,   
+        
+      },
+    
+      $inc:{
+        grandTotal: -discountPrice,  
+        "products.$.subtotal":-(parseInt(data.subtotal)),  
+        // totalAmountToBePaid: -discountPrice,
+        reFund: discountPrice,
+        
+      }
+    },
+    // { upsert: true }
+    )
+
+    await productData.findOneAndUpdate({_id:data.proId}, 
+      {
+        $inc:{
+            stock:quantity
+        }
+      });
+
+      let products = await orderData.aggregate([
+        {
+          $match: { _id:order },    
+        },
+
+        {
+          $project: {
+            _id: 0,
+            products: 1,
+          },
+        },
+        {
+          $unwind: "$products",
+          //   $unwind:'$deliveryDetails'
+        },
+        // {
+        //   $project: {
+        //     item: "$products.item",
+        //     quantity: "$products.quantity",
+        //     orderStatus: "$products.orderStatus",
+        //   },
+        // },
+        {
+          $match: { "products.orderCancelled": false },
+        },
+      ])
+  console.log(products);
+  if (products.length == 0) {
+    // console.log(
+    //   "agbDDDDDDDDDDDDDDDDDDDDDDDDDDDGGGGGGGGGGGGGGGGGGGGGGGGGGG"
+    // );
+    await orderData.updateMany(
+        { _id: data.orderId},
+        {
+          $inc: { reFund: 40, grandTotal: -40 },
+        }
+      );
+    resolve({ status: true });
+  } else {
+    resolve({ status: true });
+  }
+  
+  // resolve() 
+    })
+  }, 
             razorpayPayment:(orderId,amount)=>{                 
                 return new Promise((resolve,reject)=>{
                     console.log('3333333333333333333333333');

@@ -12,35 +12,135 @@ const couponModel=require('../models/coupon')
 
 
 module.exports={
-//    adminLogin:(adminDat)=>{         
-//      return new Promise(async(resolve,reject)=>{
-//        let response={}
-
-//        let admin=await adminData.findOne({email:adminDat.email})
-//      console.log(admin);
-//      if(admin){
-//        console.log('admin');
-//          bcrypt.compare(adminDat.password,admin.password).then((result)=>{
-//             if(result){
-//              console.log('login success');
-//                 response.admin=admin
-//                 response.status=true
-//                 resolve(response)
-//             }
-//             else{
-//                 console.log('login failed');
-//                 response.status=false
-//                 resolve(response)
-//             }
-//   })
-//  }
-//  else{
-//     console.log('login failed 2');
-//     resolve({status:false})
-//  }
-//      })
+  salesReport:(data)=>{
+    let response={}
+       let {startDate,endDate} = data
+  
+  let d1, d2, text;
+  if (!startDate || !endDate) {
+      d1 = new Date();
+      d1.setDate(d1.getDate() - 7);
+      d2 = new Date();
+      text = "For the Last 7 days";
+    } else {
+      d1 = new Date(startDate);
+      d2 = new Date(endDate);
+      text = `Between ${startDate} and ${endDate}`;
+    }
+  
+  
+  // Date wise sales report
+  const date = new Date(Date.now());
+  const month = date.toLocaleString("default", { month: "long" });
+  
+       return new Promise(async(resolve,reject)=>{
+  
+  let salesReport=await orderData.aggregate([
+  
+  {
+  $match: {
+    ordered_on: {
+      $lt: d2,
+      $gte: d1,
+    },
+  },
+  },
+  {
+  $match:{status:'placed'}
+  },
+  {
+  $group: {
+    _id: { $dayOfMonth: "$ordered_on" },
+    total: { $sum: "$grandTotal" },
+  },
+  },
+  ])
+  
+  console.log(salesReport);
+  
+  
+  let brandReport = await orderData.aggregate([
+   {
+     $match:{status:'placed'}
+    },
+   {
+      $unwind: "$products",
+    },{
+      $project:{
+          brand: "$products.Name",
+          quantity:"$products.quantity"
+      }
+    },
+   
+    {
+      $group:{
+          _id:'$brand',
+          totalAmount: { $sum: "$quantity" }, 
     
-//     },
+      }
+    },
+    { $sort : { quantity : -1 }} ,
+    { $limit : 5 },
+    
+    ])
+    console.log("]]]]]]]]]]]]]]]");
+    console.log(brandReport);
+  
+  
+  
+  let orderCount = await orderData.find({date:{$gt : d1, $lt : d2}}).count()
+  
+  console.log(orderCount);
+  let totalAmounts=await orderData.aggregate([
+  {
+   $match:{status:'placed'}
+  },
+  {
+   $group:
+   {
+     _id: null,
+     totalAmount: { $sum:"$grandTotal"}
+  
+     
+   }
+  }
+  ])
+  
+  console.log(totalAmounts);
+  
+  // let totalAmountRefund=await ordermodel.aggregate([
+  //  {
+  //    $match:{status:'placed'}
+  //   },
+  //  {
+  //    $group:
+  //    {
+  //      _id: null,
+  //      totalAmount: { $sum:'$amountToBeRefunded'
+  //        }
+  
+     
+  //    }
+  //  }
+  // ]).toArray()
+  
+  console.log('5555555555555555555555555555555555555555555555555555555555555555555555');
+  // console.log(totalAmountRefund);
+  
+  
+  
+  
+  response.salesReport=salesReport
+  response.brandReport=brandReport
+  response.orderCount=orderCount
+  response.totalAmountPaid=totalAmounts.totalAmount
+  // response.totalAmountRefund=totalAmountRefund.totalAmount
+  
+  resolve(response)      
+       })
+        
+     },
+  
     getAllUsers:()=>{
       return new Promise(async(resolve,reject)=>{
         let users=await userData.find().lean()
