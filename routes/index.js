@@ -563,7 +563,17 @@ userHelper.getProductBrand(req.params.id).then((response)=>{
 
 })
 
+router.get("/edit-profile",  async (req, res) => {
+  const Addresses = await userHelper.getAddresses(req.session.user);
+  cartcount = await userHelper.getCartCount(req.session.user._id);
+  res.render("user/editprofile", { Addresses, cartcount });
+});
 
+router.post("/Editprofile", (req, res) => {
+  userHelper.Editprofile(req.body, req.session.user._id).then(() => {            
+    res.redirect("/userprofile");
+  });
+});
 
 
 

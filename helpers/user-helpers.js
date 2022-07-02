@@ -584,6 +584,15 @@ module.exports = {
              
                 })
             },
+            Editprofile: (data, userId) => {
+                return new Promise(async (resolve, reject) => {
+                  const Editproflie = await userData.findByIdAndUpdate(
+                    { _id: userId },
+                    { $set: { name: data.name,  email: data.email } }
+                  );
+                  resolve(Editproflie);
+                });
+              },
             placeOrder:(order,items,gratotal,DeliveryCharges,net,user)=>{
                 return new Promise(async(resolve,reject)=>{
                   // console.log(net);
