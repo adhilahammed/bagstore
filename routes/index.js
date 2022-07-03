@@ -571,10 +571,22 @@ router.post('/search-filter', (req, res) => {
 })
 
 router.get('/get-products-brandwise/:id',(req,res)=>{     
-userHelper.getProductBrand(req.params.id).then((response)=>{
+userHelper.getProductBrand(req.params.id).then(async(response)=>{
   let products=response
   console.log(products);
-  res.render('user/product-brands',{layout:false,products})            
+  let user=req.session.user
+  if(user){
+    // const wishlistCount=await userHelper.getWishlistCount(req.session.user._id)
+    // const cartCount = await userHelper.getCartCount(req.session.user._id)
+    const[wishlistCount,cartCount]=await Promise.all([
+      userHelper.getWishlistCount(req.session.user._id),userHelper.getCartCount(req.session.user._id)])
+    res.render('user/product-brands',{user,products,wishlistCount,cartCount})
+  }else{
+    wishlistCount=0
+    cartCount=0
+    res.render('user/product-brands',{products,wishlistCount,cartCount})
+  }
+             
 })
 
 })
