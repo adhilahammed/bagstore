@@ -456,10 +456,13 @@ router.get('/userprofile',async(req,res)=>{
 router.get("/address-page", verifyLogin, async (req, res) => {
   const Addresses = await userHelper.getAddresses(req.session.user)
   console.log(Addresses);
+  const[wishlistCount,cartCount]=await Promise.all([
+    userHelper.getWishlistCount(req.session.user._id),userHelper.getCartCount(req.session.user._id)]) 
+    let user = req.session.user;  
+    res.render("user/address", { user,  Addresses, wishlistCount,cartCount})
+              
 
-  let user = req.session.user;              
-
-  res.render("user/address", { user, layout: false, Addresses })
+  
 })
 
 router.get("/addAddress", verifyLogin, (req, res) => {
@@ -477,7 +480,7 @@ router.post('/addAddress/:id', (req, res) => {
 
 router.get('/deleteAddress/:id',(req,res)=>{   
   userHelper.deleteAddress(req.params.id,req.session.user._id).then((response)=>{
-    
+    res.redirect('/address-page')
   })
 })
 
