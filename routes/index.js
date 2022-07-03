@@ -315,7 +315,8 @@ router.post('/delete-from-wishlist',(req,res)=>{
 
 
 router.get("/checkout-page", verifyLogin, async (req, res) => {
-  const Addresses = await userHelper.getAddresses(req.session.user)
+  try {
+    const Addresses = await userHelper.getAddresses(req.session.user)
   const cartItem = await userHelper.cartItems(req.session.user._id)
   const totalamount = await userHelper.totalAmount(req.session.user._id)
   const netTotal = totalamount.grandTotal.total
@@ -326,6 +327,11 @@ router.get("/checkout-page", verifyLogin, async (req, res) => {
   console.log(grandTotal);
   
   res.render('user/checkout', { layout: false, grandTotal,cartItem,DeliveryCharges,Addresses,netTotal,ALLCOUPONS})
+  } catch (error) {
+    console.log(error);
+    res.redirect('/')
+  }
+  
 
 
 
