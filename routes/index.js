@@ -439,10 +439,15 @@ router.post("/verify-payment", (req, res) => {
 });
 
 router.get('/userprofile',async(req,res)=>{
-   adminHelper.getOneUser(req.session.user._id).then((response)=>{    
-    const user=response
-    console.log(user);
-    res.render('user/profile',{user})                    
+  let user=req.session.user
+  let [cartCount,wishlistCount]=await Promise.all([
+    userHelper.getWishlistCount(req.session.user._id),userHelper.getCartCount(req.session.user._id)
+   ])  
+   adminHelper.getOneUser(req.session.user._id).then((response)=>{  
+   
+    const User=response
+    console.log(User);
+    res.render('user/profile',{ User,user,cartCount,wishlistCount})                    
 
    })
  })
@@ -576,8 +581,11 @@ userHelper.getProductBrand(req.params.id).then((response)=>{
 
 router.get("/edit-profile",  async (req, res) => {
   const Addresses = await userHelper.getAddresses(req.session.user);
-  cartcount = await userHelper.getCartCount(req.session.user._id);
-  res.render("user/editprofile", { Addresses, cartcount });
+  let user=req.session.user
+  let [cartCount,wishlistCount]=await Promise.all([
+    userHelper.getWishlistCount(req.session.user._id),userHelper.getCartCount(req.session.user._id)
+   ])  
+  res.render("user/editprofile", {  user,Addresses,cartCount,wishlistCount });   
 });
 
 router.post("/Editprofile", (req, res) => {
