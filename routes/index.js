@@ -457,13 +457,11 @@ router.get("/address-page", verifyLogin, async (req, res) => {
   const Addresses = await userHelper.getAddresses(req.session.user)
   console.log(Addresses);
   const[wishlistCount,cartCount]=await Promise.all([
-    userHelper.getWishlistCount(req.session.user._id),userHelper.getCartCount(req.session.user._id)]) 
-    let user = req.session.user;  
+    userHelper.getWishlistCount(req.session.user._id),userHelper.getCartCount(req.session.user._id)])
+let user = req.session.user;    
     res.render("user/address", { user,  Addresses, wishlistCount,cartCount})
               
-
-  
-})
+  })
 
 router.get("/addAddress", verifyLogin, (req, res) => {
   let user = req.session.user;
@@ -517,9 +515,20 @@ router.get('/single-product/:id',async(req,res)=>{
 
 router.post("/searchResults", async (req, res) => {        
   let key = req.body.key;
-  userHelper.getSearchProducts(key).then((response)=>{
+  userHelper.getSearchProducts(key).then(async(response)=>{
+    let user=req.session.user
     let filterresult=response
-    res.render('user/products',{filterresult})         
+    if(req.session.user){
+      // let wishlistCount=await userHelper.getWishlistCount(req.session.user._id)         
+      // let cartCount = await userHelper.getCartCount(req.session.user._id)
+     let [cartCount,wishlistCount]=await Promise.all([
+      userHelper.getWishlistCount(req.session.user._id),userHelper.getCartCount(req.session.user._id)
+     ])
+       res.render('user/products',{user,filterresult,wishlistCount,cartCount}) }
+       else{
+   
+    res.render('user/products',{filterresult}) 
+  }        
   })
   
 });
@@ -558,12 +567,7 @@ router.post('/search-filter', (req, res) => {
   let brandFilter =a.brand
   let categoryFilter = a.category
 
-  // for (let i of a.brand) {
-  //   brandFilter.push({ 'brand': i })
-  // }
-  // for (let i of a.category) {
-  //   categoryFilter.push({ 'category': i })
-  // }
+  
   userHelper.searchFilter(brandFilter, categoryFilter, price).then((result) => {   
     filterResult = result
     console.log("==============================================");
