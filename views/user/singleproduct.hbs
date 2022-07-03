@@ -42,30 +42,86 @@
               <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center">
                   <i class="fa fa-long-arrow-left"></i>
-                  <span class="ml-1">Back</span>
+                  <span class="ml-1"></span>
                 </div>
-                <i class="fa fa-shopping-cart text-muted"></i>
+                <i class=""></i>
               </div>
               <div class="mt-4 mb-3">
-                <span class="text-uppercase text-muted brand">Orianz</span>
+                <span class="text-uppercase text-muted brand">Product</span>
                 <h5 class="text-uppercase">{{this.products.Name}}</h5>
+                
                 <div class="price d-flex flex-row align-items-center">
-                  <span class="act-price">$20</span>
+                  <span class="act-price"></span>
                   <div class="ml-2">
-                    <small class="dis-price">${{this.products.Price}}</small>
-                    <span>40% OFF</span>
+                    <small class="dis-price"></small>
+                    <span></span>
                   </div>
                 </div>
               </div>
-              <p class="about">Shop from a wide range of t-shirt from orianz.
-                Pefect for your everyday use, you could pair it with a stylish
-                pair of jeans or trousers complete the look.aaaaaaaaaaaaaa
-                aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+               <div class="mt-4 mb-3">
+                <span class="text-uppercase text-muted brand">Price after offer</span>
+                <h5 class="text-uppercase"></h5>
+                
+                <div class="price d-flex flex-row align-items-center">
+                  
+                  <span class="act-price">₹ {{this.products.Price}}</span>
+                  <div class="ml-2">
+                    <small class="dis-price"></small>
+                    <span></span>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-4 mb-3">
+                <span class="text-uppercase text-muted brand">Price before offer</span>
+               
+                
+                <div class="price d-flex flex-row align-items-center">
+                  <span class="act-price"></span>
+                  <div class="ml-2">
+                    <small class="dis-price">₹ {{this.products.mrp}}</small>
+                    <span></span>
+                  </div>
+                </div>
+              </div>
+               <div class="mt-4 mb-3">
+                <span class="text-uppercase text-muted brand">Percentage Discount</span>
+                <h5 class="text-uppercase"></h5>
+                
+                <div class="price d-flex flex-row align-items-center">
+                  <span class="act-price"></span>
+                  <div class="ml-2">
+                    <small class="dis-price"></small>
+                    <span>%{{this.products.Discount}}</span>
+                  </div>
+                </div>
+              </div>
+               <div class="mt-4 mb-3">
+                <span class="text-uppercase text-muted brand">stocks left</span>
+                <h5 class="text-uppercase"></h5>
+                
+                <div class="price d-flex flex-row align-items-center">
+                  <span class="act-price"></span>
+                  <div class="ml-2">
+                    <small class="dis-price"></small>
+                    <span>{{this.products.stock}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-4 mb-3">
+                <span class="text-uppercase text-muted brand">Color</span>
+                <h5 class="text-uppercase"></h5>
+                
+                <div class="price d-flex flex-row align-items-center">
+                  <span class="act-price"></span>
+                  <div class="ml-2">
+                    <small class="dis-price"></small>
+                    <span>{{this.products.Color}}</span>
+                  </div>
+                </div>
+              </div>
+              <p class="about">
+               <span>Bags for Men</span><br><span>15 litre bags to 60 litres backpacks</span>
+              </p>
 
               <div class="cart mt-4 align-items-center">
                 <button
