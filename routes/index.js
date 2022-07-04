@@ -393,7 +393,7 @@ router.get("/view-orders",async (req, res) => {
   const cartCount = await userHelper.getCartCount(req.session.user._id)
   const wishlistCount=await userHelper.getWishlistCount(req.session.user._id)
   let user=req.session.user
-   userHelper.getOrders(req.session.user._id).then((orders)=>{
+   userHelper.getOrders(req.session.user._id).then((orders)=>{  
     // console.log(orders);
   // console.log(orders);
     res.render('user/orderlist',{user,orders,cartCount,wishlistCount})
