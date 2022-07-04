@@ -9,7 +9,7 @@ const cart2Schema= new Schema({
     },
     products:[{
         pro_id:{
-            type:mongoose.Schema.Types.ObjectId,   
+            type:mongoose.Schema.Types.ObjectId,               
             ref:'product',
             required:true
         },
